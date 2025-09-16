@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load digital_tags %}
+
+
+{% block main %}
+{% for order in orders %}
+<div class="order_card">
+    <h2 class="order_title">Товары заказа №{{ order.pk }}</h2>
+
+    <div class="order_info">
+        {% for item in order.orderproduct_set.all %}
+        <div class="order_item">
+            <p class="order_item_name">{{ item.product.title }}</p>
+            <div class="order_item_details">
+                <p class="order_item_quantity"><span>Количество:</span> {{ item.quantity }}</p>
+                <p class="order_item_price"><span>Стоимость:</span> {% get_correct_price item.product.get_price|floatformat:2 %}$</p>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="order_separator"></div>
+        <h2 class="order_total">Сумма оплаты: {% get_correct_price order.get_order_total_price %}$</h2>
+    </div>
+</div>
+{% endfor %}
+
+
+{% endblock main %}

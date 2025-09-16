@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load digital_tags %}
+{% load static %}
+
+{% block main %}
+<main>
+
+
+    <div class="content">
+        <div class="container">
+            <div class="my_card_orders">
+                <h3>{{ title }}</h3>
+            </div>
+            {% if order_products %}
+            <div class="total_products_price">
+                <p class="total_products_cart"><span>Общее количество: </span> {{ order.get_order_total_quantity }}</p>
+                <p class="total_price_cart"><span>Общая стоимость: </span> {{ order.get_order_total_price|floatformat:2 }}$</p>
+            </div>
+            {% endif %}
+            <ul class="list_card_orders ">
+                {% for order_product in order_products %}
+                <li class="order  order_cart">
+                    <div class="info">
+                        <a href="#">
+                            <img class="order_cart_img" src="{{ order_product.product.get_first_photo }}" alt="">
+                        </a>
+                        <div class="info_order">
+                            <h4 class="product_title">{{ order_product.product.title }}</h4>
+                            <div class="color_quantity">
+                                <div class="color"><p>Цвет:</p> <span>{{ order_product.product.color_name }}</span>
+                                </div>
+
+                                <div class="quantity"><p>Кол-во:</p> <span>{{ order_product.quantity }}</span>
+
+                                    <div class="quantity_arrow">
+
+                                        <a href="{% url 'add_or_del' order_product.product.slug 'add' %}">
+                                            <img data-product="id" data-action="add" class="chg-quantity update-cart"
+                                                 src="{% static 'digital/image/icons/arrow-up.png' %}" alt="">
+                                        </a>
+
+                                        <a href="{% url 'add_or_del' order_product.product.slug 'delete' %}">
+                                            <img data-product="id" data-action="remove" class="chg-quantity update-cart"
+                                                 src="{% static 'digital/image/icons/arrow-down.png' %}" alt="">
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="price_cart">
+                        <p class="product_price_title">Стоимость</p>
+                        <p class="product_price">{% get_correct_price order_product.product.price|floatformat:2 %}$</p>
+                    </div>
+
+                    <div class="data_add">
+                        <p class="product_data">Дата добавления</p>
+                        <div class="data"><img src="{% static 'digital/image/icons/clarity_date-line.svg' %}" alt="">
+                            <span>{{ order_product.added_at }}</span>
+                        </div>
+                    </div>
+                    <div class="price_cart">
+                        <p class="product_price_title">Итого</p>
+                        <p class="product_price">{% get_correct_price order_product.product.price order_product.quantity %}$</p>
+                    </div>
+
+                </li>
+                {% endfor %}
+
+            </ul>
+            {% if order_products %}
+            <div class="order_btns">
+
+                <a href="{% url 'clear_my_cart' %}" class="btn_order">Очистить корзину</a>
+                <a href="{% url 'checkout' %}" class="btn_order">Оформить заказ</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+</main>
+
+<main>
+    <div class="content">
+        <div class="container">
+            <h2 class="content__title">{{ new }}</h2>
+        </div>
+    </div>
+
+
+    <div class="content">
+        <div class="container">
+
+            <div class="content__cards list_cards">
+
+                {% for product in products %}
+                {% include 'digital/components/_card.html' %}
+
+                <!--                <div class="card h-card">-->
+                <!--                    <a href="{{ product.get_absolute_url }}">-->
+                <!--                        <div class="card_img">-->
+                <!--                            <img src="{{ product.get_first_photo }}" alt="" class="image_good">-->
+                <!--                        </div>-->
+                <!--                        <p class="card_title">{{ product.title }}</p>-->
+                <!--                        <div class="card_price">-->
+                <!--                            <p class="price">{{ product.price|floatformat:2 }}$</p>-->
+                <!--                            <span class="data_price">{{ product.installment }}$ / 12</span>-->
+                <!--                        </div>-->
+                <!--                    </a>-->
+                <!--                    <div class="card_button">-->
+                <!--                        <a class="btn_card" href="{% url 'add_or_del' product.slug 'add' %}"><img src="{% static 'digital/image/icons/cage.svg' %}" alt=""> <span class="btn_text">В корзину</span> </a>-->
+
+                <!--                        <a href="{% url 'save_favorite' product.slug %}" class="link_fav {% if product in favorites %}active{% endif %}">-->
+                <!--                            <svg width="28" height="24" viewBox="0 0 28 24" fill="none"-->
+                <!--                                 xmlns="http://www.w3.org/2000/svg">-->
+                <!--                                <path-->
+                <!--                                        d="M8.375 1C4.57813 1 1.5 4.07813 1.5 7.875C1.5 14.75 9.625 21 14 22.4538C18.375 21 26.5 14.75 26.5 7.875C26.5 4.07813 23.4219 1 19.625 1C17.3 1 15.2438 2.15438 14 3.92125C13.3661 3.01825 12.5239 2.28131 11.5447 1.77281C10.5656 1.2643 9.47831 0.999222 8.375 1Z"-->
+                <!--                                        stroke="#0F2859" stroke-width="2" stroke-linecap="round"-->
+                <!--                                        stroke-linejoin="round"/>-->
+                <!--                            </svg>-->
+                <!--                        </a>-->
+                <!--                    </div>-->
+                <!--                </div>-->
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </div>
+
+
+</main>
+{% endblock main %}

@@ -1,0 +1,23 @@
+{% load static %}
+{% load digital_tags %}
+<div class="pagination">
+    <div class="list_pag">
+
+        {% if page_obj.has_previous and page_obj.paginator.num_pages > 2 %}
+        <a href="?{% query_params page=page_obj.previous_page_number %}" class="next_last"><img
+                src="{% static 'digital/image/icons/strelka_levo.svg' %}" alt=""></a>
+        {% endif %}
+
+        {% for page in page_obj.paginator.page_range %}
+        {% if page == page_obj.number %}
+        <a href="" class="pag link_active">{{ page }}</a>
+        {% elif page > page_obj.number|add:-3 and page < page_obj.number|add:+3 %}
+        <a href="?{% query_params page=page %}" class="pag">{{ page }}</a>
+        {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next and page_obj.paginator.num_pages > 2 %}
+        <a href="?{% query_params page=page_obj.next_page_number %}" class="next_last arrow-right"><img src="{% static 'digital/image/icons/strelka_pravo.svg' %}" alt=""></a>
+        {% endif %}
+    </div>
+</div>

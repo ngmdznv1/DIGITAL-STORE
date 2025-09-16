@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<main>
+    <div class="content">
+        <div class="container">
+            <h2 class="login_title">{{ title }}</h2>
+
+            <div class="login_content">
+                <div class="login">
+                    <div class="login_form">
+                        <form action="/registration/" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="csrfmiddlewaretoken"
+                                   value="uFAM6rYRqkqc4Y8DjeiCeOYPWWzC5xzTqlGYG48DzEnynXhJDlrQmEIT1b7RNaeE">
+                            {% csrf_token %}
+
+
+                            <div class="form-group">
+                                {{ form.first_name }}
+                            </div>
+
+
+                            <div class="form-group">
+                                {{ form.last_name }}
+                            </div>
+
+
+                            <div class="form-group">
+                                {{ form.username }}
+                            </div>
+
+
+                            <div class="form-group">
+                                {{ form.password1 }}
+                            </div>
+
+
+                            <div class="form-group">
+                                {{ form.password2 }}
+                            </div>
+
+
+                            <div class="form-group">
+                                <input type="text" name="phone" class="contact__section-input" placeholder="Номер телефона">
+                            </div>
+
+
+                            <div class="form-group">
+                                <input type="file" name="photo" class="form-control" id="id_photo">
+                            </div>
+
+
+
+
+                            <button class="btn btn-register" type="submit">Зарегистироваться</button>
+                        </form>
+                    </div>
+                </div>
+
+
+                <div class="register_info">
+                    <h2 class="first_visit">Уже есть аккаунт?</h2>
+                    <p>Если вы уже проходили регистрацию, войдите через Ваш аккаунт или восстановите свой доступ. </p>
+                    <a href="{% url 'login' %}" class="btn-to_login">Войти</a>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock main %}

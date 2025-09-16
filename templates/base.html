@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% include 'components_base/_style.html' %}
+
+
+    <title>
+        {% block title %}
+        {{ title }}
+        {% endblock title %}
+    </title>
+
+</head>
+
+<body>
+
+<!-- header start -->
+{% include 'components_base/_header.html' %}
+
+<!-- header end -->
+
+
+<!-- Main start -->
+{% block main %}
+
+{% endblock main %}
+<!-- Main end -->
+
+<!-- Footer start -->
+{% include 'layouts/_footer.html' %}
+
+
+
+<!-- Footer end -->
+{% include 'components_base/_script.html' %}
+
+{% block js %}
+{% endblock js %}
+</body>
+
+</html>

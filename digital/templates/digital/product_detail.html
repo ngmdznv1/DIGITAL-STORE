@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+<main>
+    <div class="content">
+        <div class="container">
+            <div class="detail_product">
+                <div class="product_img">
+
+                    <img class="product_img-img" src="{{ product.get_first_photo }}" alt="">
+                </div>
+
+                <div class="product_info">
+                    <h2 class="title__product">{{ product.title }}</h2>
+                    <div class="price_color">
+                        <div class="price_product">
+                            <p>Цена:</p>
+                            <h3>{{ product.price }}$</h3>
+                        </div>
+                        <div class="color_product">
+                            <p class="">Цвет:</p>
+                            <div class="box_color">
+                                <div class="color_squer" style="background: {{ product.color_code }};
+    {% if product.color_code == '#FFFFFF' %} border: 1px solid black; box-shadow: 0 0 3px rgba(0,0,0,0.5); {% endif %}">
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="in_stock_product">
+                            <p>В наличии:</p>
+                            <h3>{{ product.stock }}</h3>
+                        </div>
+                        {% if product.category.title == "Смартфоны" or product.category.title == "Ноутбуки" %}
+                        <div class="memory_product">
+                            <p>Память:</p>
+                            <h3>{{ product.get_memory }}</h3>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                    <div class="list_button">
+                        <a href="{% url 'add_or_del' product.slug 'add' %}" class="btn btn_cage1"><img src="{% static 'digital/image/icons/cage.svg' %}" alt="">
+                            <span>В корзину</span> </a>
+
+                        <a href="" class="btn btn_cage2"><span>Купить в рассрочку</span> </a>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="product_detail_info">
+                <h4 class="title_info">Описание товара:</h4>
+
+
+                <span class="list_right">{{ product.description }}</span>
+
+
+            </div>
+
+            <h5 class="title_info">Гарантия: {{ product.get_guarantee_text }}</h5>
+            <div class="same_products">
+                <div class="content">
+                    <div class="container">
+                        <div class="same_product_text">
+                            <h2 class="content__title">Похожие товары</h2>
+                            <a href="{% url 'main' %}" class="content__title"><span>Больше Товаров</span> <img
+                                    src="{% static 'digital/image/icons/errow_right.svg' %}"
+                                    alt=""></a>
+                        </div>
+                        <div class="content__cards">
+                            {% for product in items %}
+                            {% include 'digital/components/_card.html' %}
+
+<!--                            <div class="card">-->
+<!--                                <a href="{{ product.get_absolute_url }}">-->
+<!--                                    <div class="card_img">-->
+<!--                                        <img src="{{ product.get_first_photo }}" alt="" class="image_good">-->
+<!--                                    </div>-->
+<!--                                    <p class="card_title">{{ product.title }}</p>-->
+<!--                                    <div class="card_price">-->
+<!--                                        <p class="price">{{ product.price|floatformat:2 }}$</p>-->
+<!--                                        <span class="data_price">{{ product.installment }}$ / 12</span>-->
+<!--                                    </div>-->
+<!--                                </a>-->
+<!--                                <div class="card_button">-->
+<!--                                    <a class="btn_card" href=""><img src="{% static 'digital/image/icons/cage.svg' %}"-->
+<!--                                                                     alt=""> <span-->
+<!--                                            class="btn_text">В корзину</span> </a>-->
+
+<!--                                    <a href="" class="link_fav">-->
+<!--                                        <svg width="28" height="24" viewBox="0 0 28 24" fill="none"-->
+<!--                                             xmlns="http://www.w3.org/2000/svg">-->
+<!--                                            <path-->
+<!--                                                    d="M8.375 1C4.57813 1 1.5 4.07813 1.5 7.875C1.5 14.75 9.625 21 14 22.4538C18.375 21 26.5 14.75 26.5 7.875C26.5 4.07813 23.4219 1 19.625 1C17.3 1 15.2438 2.15438 14 3.92125C13.3661 3.01825 12.5239 2.28131 11.5447 1.77281C10.5656 1.2643 9.47831 0.999222 8.375 1Z"-->
+<!--                                                    stroke="#0F2859" stroke-width="2" stroke-linecap="round"-->
+<!--                                                    stroke-linejoin="round"/>-->
+<!--                                        </svg>-->
+<!--                                    </a>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                            {% endfor %}
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</main>
+{% endblock main %}
+

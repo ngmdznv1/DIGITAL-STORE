@@ -1,0 +1,57 @@
+{% load static %}
+{% load digital_tags %}
+<div class="list_filter">
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="list_label">
+            <div class="brand">
+                <button class="cat_name" type="button"><span>Брэнд:</span> <img
+                        src="{% static 'digital/image/icons/errow_down.svg' %}"
+                        alt=""></button>
+                <ul class="list_cat">
+                    {% for item in brand %}
+                    <li><a class="category" href="?{% query_params item=item.slug page=1 %}">{{ item.title }}</a></li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+
+            <div class="brand brand2">
+                <button class="cat_name" type="button"><span>Цвет:</span> <img
+                        src="{% static 'digital/image/icons/errow_down.svg' %}"
+                        alt=""></button>
+                <ul class="list_cat">
+                    {% for color in colors %}
+                    <li><a class="category" href="?{% query_params color=color page=1 %}">{{ color }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+
+            <div class="brand brand3">
+                <button class="cat_name" type="button"><span>Цена от:</span> <img
+                        src="{% static 'digital/image/icons/errow_down.svg' %}"
+                        alt=""></button>
+                <ul class="list_cat price-list">
+                    {% for price in prices %}
+                    <li><a class="category" href="?{% query_params from=price page=1 %}"> {{ price }}$ </a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+
+            <div class="brand brand3">
+                <button class="cat_name" type="button"><span>Цена до:</span> <img
+                        src="{% static 'digital/image/icons/errow_down.svg' %}"
+                        alt=""></button>
+                <ul class="list_cat price-list">
+                    {% for price in prices %}
+                    <li><a class="category" href="?{% query_params to=price page=1 %}">{{ price }}$</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+
+        </div>
+    </form>
+</div>

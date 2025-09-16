@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<main>
+    <div class="content">
+        <div class="container">
+            <h2 class="login_title">{{ title }}</h2>
+
+            <div class="login_content">
+                <div class="login">
+                    <div class="login_form">
+                        <form action="/login/" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="csrfmiddlewaretoken"
+                                   value="3FLSAzvm7E0nfDY11a9Lg6PHu29pybikZlR4acF8gYXJyC77lhiZoWzLzhHEgOX5">
+                            {% csrf_token %}
+
+
+
+                            <div class="form-group">
+                                {{ form.username }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.password }}
+                            </div>
+
+
+
+
+
+                            <button class="btn btn-login" type="submit">Войти</button>
+                        </form>
+                    </div>
+                </div>
+
+
+                <div class="longin_info">
+                    <h2 class="first_visit">Впервые у нас?</h2>
+                    <p>Создайте свой аккаунт и совершайте покупки как в интернет-магазине так в сети оффлайн магазинах
+                        бренда.</p>
+                    <a href="{% url 'register' %}" class="btn-to_register">Регистрация</a>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock main %}

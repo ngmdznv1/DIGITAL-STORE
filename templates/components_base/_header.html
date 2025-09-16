@@ -1,0 +1,165 @@
+{% load static %}
+{% load digital_tags %}
+<header>
+    <div class="nav__header">
+        <div class="container">
+            <div class="nav_info">
+                <div class="nav_left">
+                    <div class="languege">
+                        <select name="brend" class="filter_lang">
+                            <option value="Samsung"><a href="" class="lang">Ру</a></option>
+                            <option value="Apple"><a href="" class="lang">En</a></option>
+                        </select>
+                    </div>
+                    <div class="city">
+                        <select name="brend" class="filter_city">
+                            <option value="Samsung"><a href="" class="lang">Ташкент</a></option>
+                            <option value="Apple"><a href="" class="lang">Самарканд</a></option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="nav_right">
+                    {% if not request.user.is_authenticated %}
+                    <a href="{% url 'login' %}">Вход</a>
+                    {% else %}
+                    <a href="{% url 'logout' %}">
+                        <img src="{% static 'digital/image/icons/logout.svg' %}" alt="">
+                    </a>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav>
+        <div class="nav_menu_icon container">
+            <div class="nav__top">
+                <a href="{% url 'main' %}" class="logo">
+                    <img src="{% static 'digital/image/logo/logo store 2.svg' %}" alt="">
+                </a>
+                <form action="{% url 'search' %}" method="get" enctype="multipart/form-data" role="search">
+                    <label for="s" class="label_search">
+                        <input id="s" type="text" placeholder="Поиск по товарам" class="serch_in" name="q">
+                        <button type="submit"><img class="icon_serch"
+                                                   src="{% static 'digital/image/icons/Vector.svg' %}" alt=""></button>
+                    </label>
+                </form>
+                <div class="nav_icon">
+                    <ul class="icon">
+                        <li><a href="{% url 'favorite' %}" class="click_icon"><img
+                                src="{% static 'digital/image/icon_header/Group 524.svg' %} " alt=""></a></li>
+                        <li><a href="{% url 'my_cart' %}" class="click_icon"><img
+                                src="{% static 'digital/image/icon_header/bi_cart3 (1).svg' %} " alt=""></a>
+                        </li>
+                        <li><a href="{% url 'profile' %}" class="click_icon"><img
+                                src="{% static 'digital/image/icon_header/Group 522 (1).svg' %} " alt=""></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#!" class="category_burger"><img
+                                    src="{% static 'digital/image/icons/burger.svg' %} " alt="">
+                            </a>
+                            <div class="dropdown-content">
+                                <ul class="list_burger">
+                                    <li class="burger_list"><a href=""><img
+                                            src="{% static 'digital/image/icon_burger/washing.svg' %}" alt="">
+                                        <span class="burger_text">Техника для дома</span></a></li>
+                                    <li class="burger_list"><a href=""><img
+                                            src="{% static 'digital/image/icon_burger/printer.svg' %}" alt="">
+                                        <span class="burger_text">Офисная техника</span></a></li>
+                                    <li class="burger_list"><a href=""><img
+                                            src="{% static 'digital/image/icon_burger/condition.svg' %}"
+                                            alt=""> <span class="burger_text">Климатическая техника</span></a>
+                                    </li>
+                                    <li class="burger_list"><a href=""><img
+                                            src="{% static 'digital/image/icon_burger/tv.svg' %}" alt=""> <span
+                                            class="burger_text">Телевизоры</span></a></li>
+                                    <li class="burger_list"><a href=""><img
+                                            src="{% static 'digital/image/icon_burger/phone.svg' %}" alt="">
+                                        <span class="burger_text">Телефоны и гаджеты</span></a></li>
+                                    <li class="burger_list"><a href=""><img
+                                            src="{% static 'digital/image/icon_burger/komputer.svg' %}" alt="">
+                                        <span class="burger_text">Компьтеры и ноутбуки</span></a></li>
+                                    <li class="burger_list"><a href=""><img
+                                            src="{% static 'digital/image/icon_burger/photo.svg' %}" alt="">
+                                        <span class="burger_text">Фото и видео</span></a></li>
+                                    <li class="burger_list"><a href=""><img
+                                            src="{% static 'digital/image/icon_burger/fan.svg' %}" alt="">
+                                        <span class="burger_text">Красота и здоровье</span></a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </nav>
+
+
+    <div class="header_nav_menu">
+        <div class="container">
+            <div class="nav__menu">
+                <ul class="nav__category">
+
+                    <li class="dropdown">
+                        <a href="" class="category_burger"><img src="{% static 'digital/image/icons/burger.svg' %}"
+                                                                alt="">
+                            <p class="cat_text">Каталог</p>
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                    </li>
+
+                    {% get_categories as categories %}
+                    {% for category in categories %}
+                    <li><a href="{{ category.get_absolute_url }}" class="category"><img src="{{ category.get_icon }}"
+                                                                                        alt="">
+                        <p class="cat_text">{{ category.title }}</p>
+                    </a></li>
+                    {% endfor %}
+
+                </ul>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+    {% if request.resolver_match.view_name not in "product_detail, category, login, register, favorite, my_cart, checkout, success, profile, my_orders, store_location" %}
+    <div class="header_baner">
+        <div class="header_baner-item">
+            <swiper-container class="mySwiper" pagination="true">
+                <swiper-slide>
+                    <img class="banner" src="{% static 'digital/image/advertising/Group 539.png' %}" alt="">
+                    <div class="container height_baner">
+                        <div class="banner_text">
+                            <p>Все, что вы любите – неповторимо</p>
+                            <h2>Samsung Galaxy A72</h2>
+                        </div>
+                    </div>
+                </swiper-slide>
+                <swiper-slide>
+                    <img class="banner" src="{% static 'digital/image/advertising/Group 539.png' %}" alt="">
+                    <div class="container height_baner">
+                        <div class="banner_text">
+                            <p>Все, что вы любите – неповторимо</p>
+                            <h2>Samsung Galaxy A72</h2>
+                        </div>
+                    </div>
+                </swiper-slide>
+            </swiper-container>
+
+        </div>
+    </div>
+    {% endif %}
+</header>

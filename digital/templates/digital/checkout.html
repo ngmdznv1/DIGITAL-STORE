@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load digital_tags %}
+
+{% block main %}
+
+<main>
+    <div class="content">
+        <div class="container">
+            <h2 class="checkout_title">{{ title }}</h2>
+
+            <div class="checkout_content">
+                <div class="checkout_form">
+                    <h2 class="address_title">1. Адрес получения товара</h2>
+                    <form action="{% url 'payment' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="block_input">
+                            <div class="form-group">
+                                {{ form.address }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.phone }}
+                            </div>
+                        </div>
+
+                        <div class="block_input">
+                            <div class="form-group">
+                                {{ form.region }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.city }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form.comment }}
+                        </div>
+
+                        <div class="checkout_form_user">
+                            <h2 class="address_title">2. Данные получателя товара</h2>
+                            <div class="block_input">
+                                <div class="form-group">
+                                    {{ form.first_name }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.last_name }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form.email }}
+                            </div>
+                        </div>
+                        <button class="btn-order" type="submit">Перейти к оплате</button>
+                    </form>
+                </div>
+
+                <div class="check">
+                    <h2 class="address_title">Товары заказа</h2>
+
+                    <div class="order_check_info">
+
+                        {% for item in order_products %}
+                        <div class="count_price">
+                            <p> {{ item.product.title }} </p>
+                            <div class="price_count">
+                                <p class="info_count_price"><span class="count_col">Количество:</span> {{ item.quantity }}</p>
+                                <p class="info_count_price"><span class="count_col"> Стоимость:</span> {% get_correct_price item.product.get_price|floatformat:2 %}$</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+
+                        <div class="line_down_check"></div>
+                        <h2 class="pay_title">Сумма оплаты: {% get_correct_price order.get_order_total_price %}$</h2>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</main>
+
+{% block js %}
+<script>
+const regionCities = {{ dict_city|safe }};
+
+const regionSelect = document.getElementById('id_region');
+const citySelect = document.getElementById('id_city');
+
+
+regionSelect.addEventListener('change', function() {
+  const selectedRegion = this.value;
+  updateCityOptions(selectedRegion);
+});
+
+
+function updateCityOptions(selectedRegion) {
+  citySelect.innerHTML = '<option value="" selected>---------</option>';
+  if (selectedRegion in regionCities) {
+    const cities = regionCities[selectedRegion];
+    cities.forEach(city => {
+      const option = document.createElement('option');
+      option.value = city[1];
+      option.text = city[0];
+      citySelect.add(option);
+    });
+  }
+}
+</script>
+{% endblock js %}
+
+{% endblock main %}
